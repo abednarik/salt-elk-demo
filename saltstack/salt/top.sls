@@ -4,3 +4,5 @@ base:
 
   'saltmaster*':
     - logstash
+    - elasticsearch
+    - kibana

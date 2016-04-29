@@ -2,5 +2,5 @@ base:
   '*':
     - default
 
-  'saltmaster*':
-    - saltmaster
+  'monitor':
+    - monitor

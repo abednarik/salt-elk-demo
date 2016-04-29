@@ -2,6 +2,7 @@
 
 include:
   - .repo
+  - .config
 
 elasticsearch-pkg:
   pkg.{{elasticsearch.pkgstate}}:
@@ -15,3 +16,5 @@ elasticsearch-svc:
     - enable: true
     - require:
       - pkg: elasticsearch-pkg
+    - watch:
+      - file: elasticsearch-config

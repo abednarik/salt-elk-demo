@@ -2,7 +2,7 @@ base:
   '*':
     - common
 
-  'saltmaster*':
+  'monitor':
     - logstash
     - elasticsearch
     - kibana

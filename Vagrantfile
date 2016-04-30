@@ -10,6 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     monitor_config.vm.network "private_network", ip: "192.168.50.10"
     monitor_config.vm.synced_folder "saltstack/salt/", "/srv/salt"
     monitor_config.vm.synced_folder "saltstack/pillar/", "/srv/pillar"
+    monitor_config.vm.network "forwarded_port", guest: 8080, host: 80
     monitor_config.vm.network "forwarded_port", guest: 5601, host: 5601
 
     config.vm.provider "virtualbox" do |vb|
@@ -35,6 +36,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     client_config.vm.base_mac = "080027D14C66"
     client_config.ssh.shell = "sh"
     client_config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
-    client_config.vm.provision "shell", path: "freebsd_provision.sh"
+    client_config.vm.provision "shell", path: "scripts/freebsd_provision.sh"
   end
 end

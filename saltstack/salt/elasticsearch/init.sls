@@ -2,7 +2,6 @@
 
 include:
   - .repo
-  - .config
 
 elasticsearch-pkg:
   pkg.{{elasticsearch.pkgstate}}:

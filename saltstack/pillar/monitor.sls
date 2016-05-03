@@ -1,13 +1,4 @@
 ---
-logstash:
-  inputs:
-    -
-      plugin_name: file
-      path:
-        - /var/log/syslog
-        - /var/log/auth.log
-      type: syslog
-
 kibana:
   source: https://download.elastic.co/kibana/kibana/kibana-4.4.2-linux-x64.tar.gz
   source_hash: sha1=6251dbab12722ea1a036d8113963183f077f9fa7
@@ -15,6 +6,5 @@ kibana:
 
 elasticsearch:
   config:
-    network.host: 127.0.0.1
+    network.host: 0.0.0.0
     http.port: 9200
-    bootstrap.mlockall: true

@@ -1,0 +1,9 @@
+filebeat:
+  prospectors:
+    -
+      paths:
+        - "/var/log/messages"
+      input_type: log
+output:
+  elasticsearch:
+   hosts: ["192.168.50.10:9200"]

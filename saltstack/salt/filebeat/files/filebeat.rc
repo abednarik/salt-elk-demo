@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. /etc/rc.subr
+
+name=filebeat
+rcvar=filebeat_enable
+
+command="/usr/local/bin/${name}"
+filebeat_config="/usr/local/etc/filebeat.yml"
+command_args="-c $filebeat_config"
+
+load_rc_config $name
+run_rc_command "$1"

@@ -1,15 +1,15 @@
-filebeat-install:
+filebeat_install:
   file.managed:
-    - name:  /usr/local/bin/filebeat
-    - source:  https://beats-nightlies.s3.amazonaws.com/jenkins/filebeat/494-80d5de6ec0eeb890a1d426510c4c156fd43d4114/filebeat-freebsd-amd64
+    - name: /usr/local/bin/filebeat
+    - source: https://beats-nightlies.s3.amazonaws.com/jenkins/filebeat/494-80d5de6ec0eeb890a1d426510c4c156fd43d4114/filebeat-freebsd-amd64
     - source_hash: md5=2037c88a577aa7ac8cb02d954dd8b563
     - user: root
     - group: wheel
     - mode: 750
-    - if_missing: /usr/local/bin/filebeat
+    - if_missing: {{ salt['pillar.get']('filebeat:bin') }}
     - failhard: True
 
-filebeat-config:
+filebeat_config:
   file.managed:
     - name: /usr/local/etc/filebeat.yml
     - source: salt://filebeat/files/filebeat.yml.jinja
@@ -18,11 +18,11 @@ filebeat-config:
     - mode: 750
     - template: jinja
     - require:
-      - file: filebeat-install
+      - file: filebeat_install
 
-filebeat-init:
+filebeat_init:
   file.managed:
-    - name: /usr/local/etc/rc.d/filebeat
+    - name: /etc/rc.d/filebeat
     - source: salt://filebeat/files/filebeat.rc
     - user: root
     - group: wheel
@@ -30,14 +30,14 @@ filebeat-init:
     - if_missing: /etc/rc.d/filebeat
     - failhard: True
     - require:
-      - file: filebeat-config
+      - file: filebeat_config
 
 filebeat-svc:
   service.running:
     - name: filebeat
     - enable: true
-    - init_delay: 10
+    - sig: {{ salt['pillar.get']('filebeat:bin') }}
     - require:
-      - file: filebeat-init
+      - file: filebeat_init
     - watch:
-      - file: filebeat-config
+      - file: filebeat_config

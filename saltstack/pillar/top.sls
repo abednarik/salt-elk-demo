@@ -1,6 +1,4 @@
 base:
-  '*':
-    - default
 
   'monitor':
     - monitor

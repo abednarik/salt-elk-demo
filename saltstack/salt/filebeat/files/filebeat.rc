@@ -1,13 +1,16 @@
 #!/bin/sh
 
+# REQUIRE: LOGIN
+
 . /etc/rc.subr
 
 name=filebeat
 rcvar=filebeat_enable
-
 command="/usr/local/bin/${name}"
+filebeat_user="root"
 filebeat_config="/usr/local/etc/filebeat.yml"
-command_args="-c $filebeat_config"
+filebeat_pid="/var/run/${name}.pid"
+start_cmd="/usr/sbin/daemon -u $filebeat_user $command -c $filebeat_config"
 
 load_rc_config $name
 run_rc_command "$1"

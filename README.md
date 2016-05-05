@@ -38,9 +38,10 @@ You should see something like This
   `sudo salt 'monitor' state.highstate`
 
 - After salt completes server provisioning Elasticsearch and Kibana should be running.
-Launch a Browser and go to **http://localhost:5601/**. Since Kibana is not yet configured
-you will be redirected to *Settings* to configure an index pattern. Will do this later on
-since we don't have an index until we get filebeat running.
+Launch a Browser and go to **http://localhost:5601/status#/** to check Kibana status.
+If you see *Status: Green* Kibana is ready to be configured. Once filebeat is up and
+running we need to set the index pattern to make Kibana able to show logs. Will do
+this later.
 
 - Now we need to setup filebeat in **client** server. running
 

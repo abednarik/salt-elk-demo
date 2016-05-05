@@ -22,7 +22,7 @@ filebeat-config:
 
 filebeat-init:
   file.managed:
-    - name: /etc/rc.d/filebeat
+    - name: /usr/local/etc/rc.d/filebeat
     - source: salt://filebeat/files/filebeat.rc
     - user: root
     - group: wheel
@@ -36,6 +36,7 @@ filebeat-svc:
   service.running:
     - name: filebeat
     - enable: true
+    - init_delay: 10
     - require:
       - file: filebeat-init
     - watch:

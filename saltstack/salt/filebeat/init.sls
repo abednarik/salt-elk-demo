@@ -32,11 +32,27 @@ filebeat_init:
     - require:
       - file: filebeat_config
 
-filebeat-svc:
-  service.running:
-    - name: filebeat
-    - enable: true
-    - sig: {{ salt['pillar.get']('filebeat:bin') }}
+filebeat_enabled:
+  file.append:
+    - name: /etc/rc.conf
+    - text: 'filebeat_enable=YES'
+
+# filebeat-svc:
+#   service.running:
+#     - name: filebeat
+#     - enable: true
+#     - sig: {{ salt['pillar.get']('filebeat:bin') }}
+#     - require:
+#       - file: filebeat_init
+#     - watch:
+#       - file: filebeat_config
+
+filebeat_svc:
+  cmd.run:
+    - name: '/usr/sbin/service filebeat start'
+    - user: root
+    - timeout: 10
+    - unless: 'ps aux | pgrep filebeat'
     - require:
       - file: filebeat_init
     - watch:

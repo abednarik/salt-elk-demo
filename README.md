@@ -39,19 +39,22 @@ You should see something like This
 
 - After salt completes server provisioning Elasticsearch and Kibana should be running.
 Launch a Browser and go to **http://localhost:5601/status#/** to check Kibana status.
-If you see *Status: Green* Kibana is ready to be configured. Once filebeat is up and
-running we need to set the index pattern to make Kibana able to show logs. Will do
-this later.
+If you see **Status: Green** Kibana is ready to be configured. Once filebeat is up and
+running we need to set the index pattern to make Kibana able to read Elasticsearc indexes
+and show logs. Will do this later once filebeat is running in **client** instance.
 
-- Now we need to setup filebeat in **client** server. running
+- Now we need to setup filebeat in **client** server. Run the following command in
+**monitor** instance:
 
   `sudo salt client state.highstate`
 
 Now we should have filebeat installed and running.
 
-- Go back to Kibana and just enter *filebeat-** instead of *logstash-**.
+- Go back to Kibana **http://localhost:5601/** and just enter **filebeat~-** 
+instead of the default one **logstash-**.
 
-Everything should be working now. If you want to generate some logs run a few commands
-to install a few packages
+Everything should be working now. At this point */var/log/messages* from **client** instance
+are sent to Elasticsearch. If you want to generate some logs run a few commands
+to install a few packages. For example:
 
   `sudo salt 'client' pkg.install vim`
